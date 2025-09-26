@@ -26,4 +26,6 @@ Route::get('/mahasiswa', function () {
     return 'Halo Mahasiswa';
 })->name('mahasiswa.show');
 
-
+Route::get('/about', function () {
+    return view('halaman-about');
+});
