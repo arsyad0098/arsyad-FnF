@@ -24,7 +24,7 @@ class PegawaiController extends Controller
             "Traveling"
         ];
 
-        $data['tgl_harus_wisuda'] = "2026-07-01";
+        $data['tgl_harus_wisuda'] = "2028-07-01";
 
 
         $tgl_wisuda = new DateTime($data['tgl_harus_wisuda']);
