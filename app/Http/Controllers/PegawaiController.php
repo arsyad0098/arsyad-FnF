@@ -10,7 +10,7 @@ class PegawaiController extends Controller
     public function index()
     {
 
-        $data['name'] = "Isan";
+        $data['name'] = "Arsyad ";
 
         $tanggal_lahir = new DateTime("2005-05-12");
         $hari_ini = new DateTime();
