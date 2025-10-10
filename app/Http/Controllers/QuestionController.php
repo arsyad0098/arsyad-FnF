@@ -28,7 +28,7 @@ class QuestionController extends Controller
     {
         //dd($request->all());
         $request->validate([
-            'nama'       => 'required|max:10',
+            'nama'       => 'required|max:100',
             'email'      => ['required', 'email'],
             'pertanyaan' => 'required|max:300|min:8',
         ], [
@@ -41,7 +41,8 @@ class QuestionController extends Controller
         $data['email']      = $request->email;
         $data['pertanyaan'] = $request->pertanyaan;
 
-        return view('home-question-respon', $data);
+        //return view('home-question-respon', $data);
+        return redirect()->route('home')->with('info', 'Terimakasih, pertanyaan anda sudah masuk! ');
     }
 
     /**
