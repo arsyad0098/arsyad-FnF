@@ -16,6 +16,14 @@ class Pelanggan extends Model
         'email',
         'phone',
     ];
+    
+    // Tambahkan relasi ke MultipleUpload
+    public function uploads()
+    {
+        return $this->hasMany(MultipleUpload::class, 'ref_id')
+                    ->where('ref_table', 'pelanggan');
+    }
+    
     public function scopeFilter(Builder $query, $request, array $filterableColumns): Builder
     {
         foreach ($filterableColumns as $column) {
@@ -25,6 +33,7 @@ class Pelanggan extends Model
         }
         return $query;
     }
+    
     public function scopeSearch($query, $request, array $columns)
     {
         if ($request->filled('search')) {

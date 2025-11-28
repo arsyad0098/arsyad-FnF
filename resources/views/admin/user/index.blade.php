@@ -23,11 +23,19 @@
                 <p class="mb-0">List data seluruh user</p>
             </div>
             <div>
-                <a href="{{ route('user.create') }}" class="btn btn-success text-white"><i
-                        class="far fa-question-circle me-1"></i> Tambah User</a>
+                <a href="{{ route('user.create') }}" class="btn btn-success text-white">
+                    <i class="far fa-question-circle me-1"></i> Tambah User
+                </a>
             </div>
         </div>
     </div>
+
+    @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
 
     <div class="row">
         <div class="col-12 mb-4">
@@ -37,22 +45,33 @@
                         <table id="table-pelanggan" class="table table-centered table-nowrap mb-0 rounded">
                             <thead class="thead-light">
                                 <tr>
+                                    <th class="border-0">Profile Picture</th>
                                     <th class="border-0">Nama Lengkap</th>
                                     <th class="border-0">Email</th>
-                                    <th class="border-0">Password</th>
+                                    <th class="border-0">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-
-                            <tbody>
                                 @foreach ($dataUser as $item)
                                     <tr>
+                                        <td>
+                                            @if($item->profile_picture)
+                                                <img src="{{ asset('storage/' . $item->profile_picture) }}" 
+                                                    alt="{{ $item->name }}" 
+                                                    class="rounded-circle" 
+                                                    style="width: 50px; height: 50px; object-fit: cover;">
+                                            @else
+                                                <div class="rounded-circle bg-secondary d-flex align-items-center justify-content-center text-white" 
+                                                    style="width: 50px; height: 50px;">
+                                                    {{ strtoupper(substr($item->name, 0, 1)) }}
+                                                </div>
+                                            @endif
+                                        </td>
                                         <td>{{ $item->name }}</td>
                                         <td>{{ $item->email }}</td>
-                                        <td>{{ $item->password }}</td>
                                         <td>
                                             {{-- Edit --}}
-                                            <a href="" class="btn btn-info btn-sm">
+                                            <a href="{{ route('user.edit', $item->id) }}" class="btn btn-info btn-sm">
                                                 <svg class="icon icon-xs me-2" data-slot="icon" fill="none"
                                                     stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24"
                                                     xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -63,10 +82,11 @@
                                                 Edit
                                             </a>
                                             {{-- delete --}}
-                                            <form action="" method="POST" style="display:inline">
+                                            <form action="{{ route('user.destroy', $item->id) }}" method="POST" style="display:inline">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm">
+                                                <button type="submit" class="btn btn-danger btn-sm" 
+                                                    onclick="return confirm('Yakin ingin menghapus user ini?')">
                                                     <svg class="icon icon-xs me-2" data-slot="icon" fill="none"
                                                         stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24"
                                                         xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -77,12 +97,9 @@
                                                     Hapus
                                                 </button>
                                             </form>
-
                                         </td>
                                     </tr>
                                 @endforeach
-                            </tbody>
-
                             </tbody>
                         </table>
                     </div>
